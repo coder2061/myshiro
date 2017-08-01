@@ -21,29 +21,29 @@ public class IndexController extends BaseController {
 
 	@RequestMapping("/toLogin")
 	public String toLogin() {
-		return "login";
+		return "view/login";
 	}
 
 	@RequestMapping("/unauthorized")
 	public String unauthorized() {
-		return "unauthorized";
+		return "view/unauthorized";
 	}
 
 	@RequestMapping("/authenticated")
 	public String authenticated() {
-		return "success";
+		return "view/success";
 	}
 
 	@RequestMapping("/role")
 	public String role() {
 		subject().checkRole("admin");
-		return "success";
+		return "view/success";
 	}
 
 	@RequestMapping("/permission")
 	public String permission() {
 		subject().checkPermissions("user:create");
-		return "success";
+		return "view/success";
 	}
 
 	@RequestMapping("/login")
@@ -57,13 +57,19 @@ public class IndexController extends BaseController {
 		} catch (IncorrectCredentialsException e) {
 			result = "用户名/密码错误：" + e.getMessage();
 		} catch (AuthenticationException e) {
+			e.printStackTrace();
 			result = "其他错误：" + e.getMessage();
 		}
 		if (result != null) {
 			System.out.println("------- login fail:" + result);
-			return "login";
+			return "view/login";
 		}
-		return "success";
+		return "view/success";
+	}
+
+	@RequestMapping("/guest")
+	public String tag() {
+		return "shiro/guest";
 	}
 
 }

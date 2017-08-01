@@ -73,7 +73,7 @@
 	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<!-- 自动给action方法return的字符串加上前缀和后缀变成可用的url地址 -->
-		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="prefix" value="/WEB-INF/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -100,5 +100,22 @@
         </mvc:interceptor>
     </mvc:interceptors>
     -->
+
+	<!-- org.springframework.web.servlet.resource.DefaultServletHttpRequestHandler -->
+	<!-- 它会像一个检查员，对进入DispatcherServlet的URL进行筛查，如果发现是静态资源的请求，就将该请求转由Web应用服务器默认的Servlet处理，如果不是静态资源的请求，才由DispatcherServlet继续处理 -->
+	<!-- 即将静态资源的处理经由Spring MVC框架交回Web应用服务器处理 -->
+    <mvc:default-servlet-handler/>
+    <!-- 一般Web应用服务器默认的Servlet名称是"default"，因此DefaultServletHttpRequestHandler可以找到它。 -->
+    <!-- 如果你所有的Web应用服务器的默认Servlet名称不是"default"，则需要通过default-servlet-name属性显示指定 -->
+    <!-- 
+    <mvc:default-servlet-handler default-servlet-name="default"/>
+     -->
+
+	<!-- 由Spring MVC框架自己处理静态资源，并添加一些有用的附加值功能 -->
+	<!-- 允许静态资源放在任何地方，如WEB-INF目录下、类路径下等 -->
+	<!-- location属性指定静态资源的位置，由于location属性是Resources类型，因此可以使用诸如"classpath:"等的资源前缀指定资源位置 -->
+	<!-- 缓存优化：可以通过cacheSeconds属性指定静态资源在浏览器端的缓存时间，一般可将该时间设置为一年，以充分利用浏览器端的缓存。在输出静态资源时，会根据配置设置好响应报文头的Expires 和 Cache-Control值 -->
+    <!-- 在接收到静态资源的获取请求时，会检查请求头的Last-Modified值，如果静态资源没有发生变化，则直接返回303相应状态码，提示客户端使用浏览器缓存的数据，而非将静态资源的内容输出到客户端，以充分节省带宽，提高程序性能 -->
+    <mvc:resources location="/static,classpath:/META-INF/static/" mapping="/static/**" cache-period="3600" order="1"/>
 
 </beans>

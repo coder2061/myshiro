@@ -29,7 +29,7 @@
 	</context-param>
 	<!-- 加载Spring-*XML配置文件 -->
 	<context-param>
-		<param-name>contextConfigLocation </param-name>
+		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			classpath*:spring-context.xml,
 			classpath*:mybatis-context.xml,
@@ -132,7 +132,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring-mvc</servlet-name>
-		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯，/表示拦截所有请求 -->
+		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯，/表示拦截所有请求，以致无法访问静态资源 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- 确保静态资源可以被访问 -->
