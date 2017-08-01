@@ -10,8 +10,8 @@
 	<!-- 是否可以分布式处理 -->
 	<!-- <distributable/> -->
 
-	<!-- web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter 
-		-> servlet -->
+	<!-- web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet -->
+
 	<!-- 设置项目根路径，本项目中log4j会读取此属性来动态创建log文件目录 -->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
@@ -42,6 +42,10 @@
         <param-name>shiroEnvironmentClass</param-name>
         <!-- 默认先从/WEB-INF/shiro.ini，如果没有找classpath:shiro.ini -->
         <param-value>org.apache.shiro.web.env.IniWebEnvironment</param-value>
+        <!-- 自定义 FilterChainResolver -->
+        <!-- 
+        <param-value>com.github.shiro.resolver.MyIniWebEnvironment</param-value>
+         -->
     </context-param>
     <context-param>
         <param-name>shiroConfigLocations</param-name>
@@ -102,9 +106,7 @@
 	</listener>
 	<!-- 防止Spring内存溢出监听器 -->
 	<listener>
-		<listener-class>
-			org.springframework.web.util.IntrospectorCleanupListener
-		</listener-class>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 	<!--Spring Log4j监听器 -->
 	<listener>
