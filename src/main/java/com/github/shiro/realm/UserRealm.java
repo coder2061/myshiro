@@ -21,7 +21,6 @@ import com.github.bo.UserBO;
 import com.github.enums.UserStatusEnum;
 import com.github.po.User;
 import com.github.service.UserService;
-import com.github.service.impl.UserServiceImpl;
 import com.github.shiro.util.CryptoUtil;
 
 /**
@@ -33,7 +32,7 @@ import com.github.shiro.util.CryptoUtil;
 public class UserRealm extends AuthorizingRealm {
 
 	@Autowired
-	private UserService userService = new UserServiceImpl();
+	private UserService userService;
 
 	// 获取授权信息
 	@Override

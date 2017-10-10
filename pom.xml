@@ -35,6 +35,12 @@
 			<artifactId>spring-orm</artifactId>
 			<version>4.3.2.RELEASE</version>
 		</dependency>
+		<!-- spring jdbc 操作 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.3.2.RELEASE</version>
+		</dependency>
 
 		<!-- 整合单元测试框架 -->
 		<dependency>

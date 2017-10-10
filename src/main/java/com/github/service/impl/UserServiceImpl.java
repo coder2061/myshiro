@@ -1,5 +1,6 @@
 package com.github.service.impl;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -11,8 +12,9 @@ import com.github.dao.UserDAO;
 import com.github.po.User;
 import com.github.service.UserService;
 
-@Service
-public class UserServiceImpl implements UserService {
+@Service("userService")
+public class UserServiceImpl implements UserService, Serializable {
+	private static final long serialVersionUID = -1682266645959590372L;
 
 	@Autowired
 	private UserDAO userDAO;
