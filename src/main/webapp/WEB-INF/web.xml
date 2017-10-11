@@ -12,7 +12,7 @@
 
 	<!-- web.xml 的加载顺序是：ServletContext -> context-param -> listener -> filter -> servlet -->
 
-	<!-- 设置项目根路径，本项目中log4j会读取此属性来动态创建log文件目录 -->
+	<!-- 设置项目根路径，本项目中 log4j 会读取此属性来动态创建 log 文件目录 -->
 	<context-param>
 		<param-name>webAppRootKey</param-name>
 		<param-value>webapp.root</param-value>
@@ -22,12 +22,12 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>classpath:log4j.properties</param-value>
 	</context-param>
-	<!--Spring默认刷新Log4j配置文件的间隔,单位：毫秒,生产环境设为0 -->
+	<!--spring 默认刷新 log4j 配置文件的间隔,单位：毫秒,生产环境设为0 -->
 	<context-param>
 		<param-name>log4jRefreshInterval</param-name>
 		<param-value>0</param-value>
 	</context-param>
-	<!-- 加载Spring-*XML配置文件 -->
+	<!-- 加载 spring-*.xml 配置文件 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
@@ -37,12 +37,12 @@
 			classpath*:spring-validator.xml
 		</param-value>
 	</context-param>
-	<!-- shiro1.2+V环境配置 -->
+	<!-- shiro_V_1.2+环境配置，可以使用 xml 进行配置 -->
 	<context-param>
         <param-name>shiroEnvironmentClass</param-name>
-        <!-- 默认先从/WEB-INF/shiro.ini，如果没有找classpath:shiro.ini -->
+        <!-- 默认先从 /WEB-INF/shiro.ini，如果没有找 classpath:shiro.ini -->
         <param-value>org.apache.shiro.web.env.IniWebEnvironment</param-value>
-        <!-- 自定义 FilterChainResolver -->
+        <!-- 自定义环境配置类 -->
         <!-- 
         <param-value>com.github.shiro.resolver.MyIniWebEnvironment</param-value>
          -->
@@ -58,7 +58,7 @@
         </param-value>
     </context-param>
 
-	<!-- Spring字符集过滤器 -->
+	<!-- spring 字符集过滤器 -->
 	<filter>
 		<filter-name>SpringEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -96,15 +96,15 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-	<!--Spring监听器的配置，用于在启动Web容器时，自动装配ApplicationContext的配置信息 -->
+	<!--spring 监听器的配置，用于在启动Web容器时，自动装配ApplicationContext的配置信息 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!-- 防止Spring内存溢出监听器 -->
+	<!-- 防止 spring 内存溢出监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
-	<!--Spring Log4j监听器 -->
+	<!--spring log4j 监听器 -->
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
@@ -114,7 +114,7 @@
 		<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
 
-	<!-- SpringMVC核心配置 -->
+	<!-- SpringMVC 核心配置 -->
 	<servlet>
 		<servlet-name>spring-mvc</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -122,13 +122,13 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath*:spring-mvc.xml</param-value>
 		</init-param>
-		<!-- 控制servlet的加载顺序 -->
+		<!-- 控制 servlet 的加载顺序 -->
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>spring-mvc</servlet-name>
-		<!-- 此处可以可以配置成*.do，对应struts的后缀习惯，/表示拦截所有请求，以致无法访问静态资源 -->
+		<!-- 此处可以可以配置成 *.do，对应 struts 的后缀习惯，/表示拦截所有请求，以致无法访问静态资源 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	<!-- 确保静态资源可以被访问 -->
@@ -169,4 +169,10 @@
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
+
+	<!-- shiro 会话过期跳转页面 -->
+	<error-page>
+		<exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
+		<location>/WEB-INF/errorpage/invalid_session.jsp</location>
+	</error-page>
 </web-app>

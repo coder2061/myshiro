@@ -8,6 +8,9 @@ import org.apache.shiro.util.Factory;
 import org.apache.shiro.util.ThreadContext;
 import org.junit.After;
 
+import com.github.service.UserService;
+import com.github.service.impl.UserServiceImpl;
+
 /**
  * 基类
  * 
@@ -15,6 +18,8 @@ import org.junit.After;
  * @date 2017年7月27日 下午2:21:59
  */
 public abstract class BaseTest {
+
+	protected UserService userService = new UserServiceImpl();
 
 	/**
 	 * 登录
@@ -35,7 +40,8 @@ public abstract class BaseTest {
 		// 3、得到Subject及创建用户名/密码身份验证Token（即用户身份/凭证）
 		Subject subject = SecurityUtils.getSubject();
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-
+		// 当前主机地址
+		token.setHost("127.0.0.1");
 		subject.login(token);
 	}
 

@@ -1,12 +1,15 @@
 package com.github.bean;
 
+import java.io.Serializable;
+
 /**
  * 请求信息
  * 
  * @author jiangyf
  * @date 2017年7月5日 上午11:37:47
  */
-public class RequestInfo {
+public class RequestInfo implements Serializable {
+	private static final long serialVersionUID = -6891502424683399824L;
 
 	/**
 	 * 请求地址
