@@ -54,12 +54,13 @@ public class UserRealm extends AuthorizingRealm {
 		String username = (String) token.getPrincipal();
 		String password = new String((char[]) token.getCredentials());
 		User user = getUser(username);
-		// 校验密码，可以交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配
+		// 手动进行密码匹配
 		if (!CryptoUtil.encryptPassword(password, user.getSalt()).equals(user.getPassword())) {
 			throw new IncorrectCredentialsException();
 		}
-		return new SimpleAuthenticationInfo(username, password, ByteSource.Util.bytes(user.getSalt()),
-				getName());
+		// 可以交给 AuthenticatingRealm 使用 CredentialsMatcher 进行密码匹配，可自定义实现
+		return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),
+				ByteSource.Util.bytes(user.getSalt()), getName());
 	}
 
 	/**

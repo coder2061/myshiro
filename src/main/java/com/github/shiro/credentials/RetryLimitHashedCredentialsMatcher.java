@@ -1,12 +1,11 @@
 package com.github.shiro.credentials;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Ehcache;
-import net.sf.ehcache.Element;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheManager;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,25 +18,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 	// 限制验证次数
 	private static final int LIMIT_RETRY_COUNT = 5;
-	private Ehcache passwordRetryCache;
+	private Cache<String, AtomicInteger> passwordRetryCache;
 
-	public RetryLimitHashedCredentialsMatcher() {
-		CacheManager cacheManager = CacheManager
-				.newInstance(CacheManager.class.getClassLoader().getResource("ehcache.xml"));
+	public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
 		passwordRetryCache = cacheManager.getCache("passwordRetryCache");
 	}
 
 	@Override
 	public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
 		String username = (String) token.getPrincipal();
-		// 判断账号是否缓存，是则表示该账号请求登录过
-		Element element = passwordRetryCache.get(username);
-		if (element == null) {
-			element = new Element(username, new AtomicInteger(0));
-			passwordRetryCache.put(element);
+		// retry count + 1
+		AtomicInteger retryCount = passwordRetryCache.get(username);
+		if (retryCount == null) {
+			retryCount = new AtomicInteger(0);
+			passwordRetryCache.put(username, retryCount);
 		}
-		// 判断验证次数是否超限
-		AtomicInteger retryCount = (AtomicInteger) element.getObjectValue();
 		if (retryCount.incrementAndGet() > LIMIT_RETRY_COUNT) {
 			throw new ExcessiveAttemptsException();
 		}
