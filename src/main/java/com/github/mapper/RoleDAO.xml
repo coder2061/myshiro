@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_role
+    from shiro_role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,27 +93,27 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from sys_role
+    from shiro_role
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sys_role
+    delete from shiro_role
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.po.RoleExample" >
-    delete from sys_role
+    delete from shiro_role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.github.po.Role" >
-    insert into sys_role (id, role, description, 
+    insert into shiro_role (id, role, description, 
       status)
     values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.github.po.Role" >
-    insert into sys_role
+    insert into shiro_role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.github.po.RoleExample" resultType="java.lang.Integer" >
-    select count(*) from sys_role
+    select count(*) from shiro_role
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sys_role
+    update shiro_role
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
@@ -170,7 +170,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sys_role
+    update shiro_role
     set id = #{record.id,jdbcType=BIGINT},
       role = #{record.role,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -180,7 +180,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.github.po.Role" >
-    update sys_role
+    update shiro_role
     <set >
       <if test="role != null" >
         role = #{role,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.po.Role" >
-    update sys_role
+    update shiro_role
     set role = #{role,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}

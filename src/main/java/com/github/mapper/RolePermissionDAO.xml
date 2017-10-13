@@ -72,7 +72,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_role_permission
+    from shiro_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -89,22 +89,22 @@
     </if>
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.github.po.RolePermission" >
-    delete from sys_role_permission
+    delete from shiro_role_permission
     where role_id = #{roleId,jdbcType=BIGINT}
       and permission_id = #{permissionId,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.po.RolePermissionExample" >
-    delete from sys_role_permission
+    delete from shiro_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.github.po.RolePermission" >
-    insert into sys_role_permission (role_id, permission_id)
+    insert into shiro_role_permission (role_id, permission_id)
     values (#{roleId,jdbcType=BIGINT}, #{permissionId,jdbcType=BIGINT})
   </insert>
   <insert id="insertSelective" parameterType="com.github.po.RolePermission" >
-    insert into sys_role_permission
+    insert into shiro_role_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="roleId != null" >
         role_id,
@@ -123,13 +123,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.github.po.RolePermissionExample" resultType="java.lang.Integer" >
-    select count(*) from sys_role_permission
+    select count(*) from shiro_role_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sys_role_permission
+    update shiro_role_permission
     <set >
       <if test="record.roleId != null" >
         role_id = #{record.roleId,jdbcType=BIGINT},
@@ -143,7 +143,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sys_role_permission
+    update shiro_role_permission
     set role_id = #{record.roleId,jdbcType=BIGINT},
       permission_id = #{record.permissionId,jdbcType=BIGINT}
     <if test="_parameter != null" >

@@ -115,6 +115,11 @@
         <property name="loginUrl" value="/toLogin"/>
     </bean>
 
+	<!-- ssl 支持 -->
+	<bean id="sslFilter" class="org.apache.shiro.web.filter.authz.SslFilter">
+		<property name="port" value="8443" />
+	</bean>
+
     <!-- Shiro 的 Web 过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
@@ -125,12 +130,13 @@
         <property name="filters">
             <util:map>
                 <entry key="authc" value-ref="formAuthenticationFilter"/>
+                <entry key="ssl" value-ref="sslFilter"/>
             </util:map>
         </property>
         <!-- filterChainDefinitions 用于声明 url 和 filter 的关系，即 ini 配置中的[urls]部分；anon：匿名；authc：登录认证；user：用户已登录；logout：退出 -->
         <property name="filterChainDefinitions">
             <value>
-                /toLogin = anon
+                /toLogin = ssl,anon
                 /unauthorized = anon
                 /index.jsp = authc
                 /user = user

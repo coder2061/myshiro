@@ -74,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from sys_permission
+    from shiro_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
@@ -93,27 +93,27 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from sys_permission
+    from shiro_permission
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from sys_permission
+    delete from shiro_permission
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.github.po.PermissionExample" >
-    delete from sys_permission
+    delete from shiro_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.github.po.Permission" >
-    insert into sys_permission (id, permission, description, 
+    insert into shiro_permission (id, permission, description, 
       status)
     values (#{id,jdbcType=BIGINT}, #{permission,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{status,jdbcType=TINYINT})
   </insert>
   <insert id="insertSelective" parameterType="com.github.po.Permission" >
-    insert into sys_permission
+    insert into shiro_permission
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -144,13 +144,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.github.po.PermissionExample" resultType="java.lang.Integer" >
-    select count(*) from sys_permission
+    select count(*) from shiro_permission
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map" >
-    update sys_permission
+    update shiro_permission
     <set >
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
@@ -170,7 +170,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map" >
-    update sys_permission
+    update shiro_permission
     set id = #{record.id,jdbcType=BIGINT},
       permission = #{record.permission,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
@@ -180,7 +180,7 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.github.po.Permission" >
-    update sys_permission
+    update shiro_permission
     <set >
       <if test="permission != null" >
         permission = #{permission,jdbcType=VARCHAR},
@@ -195,7 +195,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.github.po.Permission" >
-    update sys_permission
+    update shiro_permission
     set permission = #{permission,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       status = #{status,jdbcType=TINYINT}

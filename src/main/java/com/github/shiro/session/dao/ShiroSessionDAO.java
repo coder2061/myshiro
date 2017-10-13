@@ -30,7 +30,7 @@ public class ShiroSessionDAO extends CachingSessionDAO {
 		}
 		Serializable sessionId = generateSessionId(session);
 		assignSessionId(session, sessionId);
-		String sql = "insert into sessions(id, session) values(?,?)";
+		String sql = "insert into shiro_session(id, session) values(?,?)";
 		jdbcTemplate.update(sql, sessionId, SerializableUtil.serialize(session));
 		return session.getId();
 	}
@@ -44,7 +44,7 @@ public class ShiroSessionDAO extends CachingSessionDAO {
 		if (session instanceof ValidatingSession && !((ValidatingSession) session).isValid()) {
 			return;
 		}
-		String sql = "update sessions set session=? where id=?";
+		String sql = "update shiro_session set session=? where id=?";
 		jdbcTemplate.update(sql, SerializableUtil.serialize(session), session.getId());
 	}
 
@@ -53,14 +53,14 @@ public class ShiroSessionDAO extends CachingSessionDAO {
 		if (session == null) {
 			return;
 		}
-		String sql = "delete from sessions where id=?";
+		String sql = "delete from shiro_session where id=?";
 		jdbcTemplate.update(sql, session.getId());
 	}
 
 	// 所有在读取时会先查缓存中是否存在，如果找不到才到数据库中查找
 	@Override
 	protected Session doReadSession(Serializable sessionId) {
-		String sql = "select session from sessions where id=?";
+		String sql = "select session from shiro_session where id=?";
 		List<String> sessionStrList = jdbcTemplate.queryForList(sql, String.class, sessionId);
 		if (sessionStrList.size() == 0)
 			return null;

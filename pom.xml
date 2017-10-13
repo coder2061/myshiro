@@ -271,7 +271,7 @@
 	<build>
 		<pluginManagement>
 			<plugins>
-				<!-- maven编译器 -->
+				<!-- maven 编译器 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
@@ -282,7 +282,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- maven跳过单元测试 -->
+				<!-- maven 跳过单元测试 -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
@@ -304,8 +304,7 @@
 					</configuration>
 				</plugin>
 
-				<!-- jetty热部署 -->
-				<!-- 
+				<!-- jetty 热部署 -->
 				<plugin>
 					<groupId>org.mortbay.jetty</groupId>
 					<artifactId>jetty-maven-plugin</artifactId>
@@ -314,11 +313,23 @@
 						<webAppConfig>
 							<contextPath>/${project.build.finalName}</contextPath>
 						</webAppConfig>
+						<connectors>
+							<connector implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
+								<port>9080</port>
+								<maxIdleTime>60000</maxIdleTime>
+							</connector>
+							<connector implementation="org.eclipse.jetty.server.ssl.SslSocketConnector">
+								<port>9443</port>
+								<maxIdleTime>60000</maxIdleTime>
+								<keystore>${project.basedir}/localhost.keystore</keystore>
+								<password>123456</password>
+								<keyPassword>123456</keyPassword>
+							</connector>
+						</connectors>
 					</configuration>
 				</plugin>
-				 -->
 
-				<!-- tomcat热部署 -->
+				<!-- tomcat 热部署 -->
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat7-maven-plugin</artifactId>
