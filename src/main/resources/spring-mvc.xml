@@ -20,6 +20,11 @@
 	<mvc:annotation-driven/>
 	<!-- AOP 代理 -->
 	<aop:config proxy-target-class="true" />
+	<!-- 开启添加权限的注解扫描 -->
+	<bean id="defaultAdvisorAutoProxyCreator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator">
+		<!-- 配置强制使用 cglib 方式为 Action 创建代理对象 -->
+		<property name="proxyTargetClass" value="true" />
+	</bean>
 	<!-- 开启 Shiro Spring AOP 权限注解的支持 -->
 	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
 		<property name="securityManager" ref="securityManager" />
