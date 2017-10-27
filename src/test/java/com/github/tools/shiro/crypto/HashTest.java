@@ -24,7 +24,7 @@ import org.apache.shiro.util.SimpleByteSource;
  * @date 2017年7月28日 下午3:30:17
  */
 public class HashTest {
-	// 算法名，如：MD5，SHA1，SHA256，SHA1512
+	// 算法名，如：MD5，SHA-1，SHA-256，SHA-384，SHA-512
 	public static String algorithmName = "MD5";
 	// 源字符串
 	public static String source = "abc123";

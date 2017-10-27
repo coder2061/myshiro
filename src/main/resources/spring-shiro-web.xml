@@ -122,9 +122,13 @@
 
     <!-- Shiro 的 Web 过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!-- shiro 的核心安全接口 -->
         <property name="securityManager" ref="securityManager"/>
+		<!-- 登录路径 -->
         <property name="loginUrl" value="/toLogin"/>
-        <property name="successUrl" value="/" />
+		<!-- 登录成功后跳转路径 -->
+        <property name="successUrl" value="/index" />
+		<!-- 未授权时跳转路径 -->
         <property name="unauthorizedUrl" value="/unauthorized"/>
         <!-- filters 属性用于定义自己的过滤器，即 ini 配置中的[filters]部分； -->
         <property name="filters">
@@ -136,9 +140,9 @@
         <!-- filterChainDefinitions 用于声明 url 和 filter 的关系，即 ini 配置中的[urls]部分；anon：匿名；authc：登录认证；user：用户已登录；logout：退出 -->
         <property name="filterChainDefinitions">
             <value>
-                /toLogin = ssl,anon
+                /toLogin = anon
                 /unauthorized = anon
-                /index.jsp = authc
+                /index = authc
                 /user = user
                 /logout = logout
             </value>
