@@ -10,9 +10,19 @@
 	<!-- 基于 WEB 应用的 Spring 配置 -->
 
     <!-- 缓存管理器，使用 Ehcache 实现 -->
+	<!-- shiro 对 ehcache 的缓存管理直接使用 spring 的缓存工厂 -->
+	<!-- 
+	<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManager" ref="cacheManagerFactory"/>
+	</bean>
+	 -->
+    <!-- 
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-    	<!-- 缓存配置 -->
         <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+     -->
+    <bean id="cacheManager" class="com.github.cache.SpringCacheManager">
+        <property name="cacheManager" ref="springCacheManager"/>
     </bean>
 
     <!-- 凭证匹配器 -->
@@ -28,6 +38,7 @@
 
     <!-- Realm 实现 -->
     <bean id="userRealm" class="com.github.shiro.realm.UserRealm">
+        <constructor-arg ref="credentialsMatcher"/>
         <property name="credentialsMatcher" ref="credentialsMatcher"/>
         <property name="cachingEnabled" value="true"/>
         <property name="authenticationCachingEnabled" value="true"/>
@@ -152,4 +163,7 @@
     <!-- Shiro 生命周期处理器-->
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
 
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+		<property name="securityManager" ref="securityManager" />
+	</bean>
 </beans>

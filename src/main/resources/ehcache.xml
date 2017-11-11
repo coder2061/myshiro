@@ -3,6 +3,13 @@
 
 	<diskStore path="java.io.tmpdir" />
 
+	<!-- 
+	maxElementsInMemory 为缓存对象的最大数目, 
+	eternal 设置是否永远不过期, 
+	timeToIdleSeconds 对象处于空闲状态的最多秒数, 
+	timeToLiveSeconds 对象处于缓存状态的最多秒数
+	 -->
+
 	<!-- 登录记录缓存 锁定10分钟 -->
 	<cache name="passwordRetryCache" maxEntriesLocalHeap="2000"
 		eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0"

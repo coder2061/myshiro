@@ -34,6 +34,7 @@
 			classpath*:spring-context.xml,
 			classpath*:mybatis-context.xml,
 			classpath*:spring-mybatis.xml,
+			classpath*:spring-cache.xml,
 			classpath*:spring-shiro-web.xml,
 			classpath*:spring-validator.xml
 		</param-value>
@@ -176,8 +177,10 @@
 	</session-config>
 
 	<!-- shiro 会话过期跳转页面 -->
+	<!-- 
 	<error-page>
 		<exception-type>org.apache.shiro.session.InvalidSessionException</exception-type>
 		<location>/WEB-INF/errorpage/invalid_session.jsp</location>
 	</error-page>
+	 -->
 </web-app>

@@ -10,6 +10,8 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -34,16 +36,25 @@ public class UserRealm extends AuthorizingRealm {
 	@Autowired
 	private UserService userService;
 
+	public UserRealm(CredentialsMatcher matcher) {
+		super(matcher);
+	}
+
 	// 获取授权信息
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
+		if (principals == null) {
+			throw new AuthorizationException("Principal 对象不能为空");
+		}
 		String username = (String) principals.getPrimaryPrincipal();
-		User user = getUser(username);
+//		User user = getUser(username);
+		User user = (User) principals.fromRealm(getName()).iterator().next();
 		List<String> roles = userService.listRole(user.getId());
 		List<String> permissions = userService.listPermission(user.getId());
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
 		authorizationInfo.setRoles(new HashSet<>(roles));
 		authorizationInfo.setStringPermissions(new HashSet<>(permissions));
+		authorizationInfo.addStringPermissions(permissions);
 		return authorizationInfo;
 	}
 
@@ -55,9 +66,9 @@ public class UserRealm extends AuthorizingRealm {
 		String password = new String((char[]) token.getCredentials());
 		User user = getUser(username);
 		// 手动进行密码匹配
-		if (!CryptoUtil.encryptPassword(password, user.getSalt()).equals(user.getPassword())) {
-			throw new IncorrectCredentialsException();
-		}
+//		if (!CryptoUtil.encryptPassword(password, user.getSalt()).equals(user.getPassword())) {
+//			throw new IncorrectCredentialsException();
+//		}
 		// 可以交给 AuthenticatingRealm 使用 CredentialsMatcher 进行密码匹配，可自定义实现
 		return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),
 				ByteSource.Util.bytes(user.getSalt()), getName());

@@ -33,6 +33,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 			retryCount = new AtomicInteger(0);
 			passwordRetryCache.put(username, retryCount);
 		}
+		System.out.println("------------ 身份验证匹配次数：" + retryCount.get());
 		if (retryCount.incrementAndGet() > LIMIT_RETRY_COUNT) {
 			throw new ExcessiveAttemptsException();
 		}
